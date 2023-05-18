@@ -8,10 +8,10 @@ Setting up Shillify Telegram is a breeze! Follow these steps to get your adverti
 
 1. ⬇️ Download or clone the repo, and enter the folder with the command line.
 2. ⚙️ Install the requirements with the command `python -m pip install -r requirements.txt`
-3. 🖋️ Fill in the `config.yaml` file with your settings.
-4. 🔖 Specify your groups in the `src/data/input/groups.txt` file.
-5. ✉️ Write the message you want to broadcast in the `src/data/input/message.txt` file.
-6. 🏁 Run the program and let Shillify Telegram do the magic!
+3. 🖋️ Fill in the `config.yaml` file with your settings. Documentation will be up soon.
+4. 🔖 Add your groups in the `src/data/input/groups.txt` file, with `t.me/grouplink` format and sepparated by a new line.
+5. ✉️ Write the message you want to broadcast in the `src/data/input/message.txt` file. Supports UTF-8 characters.
+6. 🏁 Run the program and let it do the magic!
 
 ## 🚀 Features
 
