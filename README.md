@@ -30,9 +30,3 @@ This tool is designed for educational purposes and as a proof of concept. I am n
 ## 🎗️ Acknowledgments
 
 Heartfelt thanks to the open-source community for their continuous support and resources that have been integral to this project.
-
-## 🌐 Connect With Us
-
-Join our community on Discord for updates, support, and to meet other users of Shillify Telegram:
-
-- [Discord](https://discord.gg/kws)
