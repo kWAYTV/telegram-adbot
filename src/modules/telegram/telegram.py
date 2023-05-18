@@ -164,13 +164,13 @@ class Shiller:
                 self.webhook.error_webhook("Failed to get groups. Error: {}".format(e))
 
             self.logger.log("INFO", "Finished shilling, sent {} messages. Waiting {} seconds before shilling again.".format(sent, self.config.after_groups_messaged_delay))
-            self.client.send_message(self.config.nickname, "Finished shilling, sent {} messages. Starting again in {} seconds.".format(sent, self.config.after_groups_messaged_delay))
+            await self.client.send_message(self.config.nickname, "Finished shilling, sent {} messages. Starting again in {} seconds.".format(sent, self.config.after_groups_messaged_delay))
             self.webhook.finished_webhook(sent)
             await asyncio.sleep(int(self.config.after_groups_messaged_delay))
 
     async def start(self):
         await self.connect_client()
-        self.client.send_message(self.config.nickname, "Shillify Telegram has started!")
+        await self.client.send_message(self.config.nickname, "Shillify Telegram has started!")
         await self.join_groups()
         await self.leave_groups()
         await self.start_shilling()
