@@ -1,2 +1,38 @@
-# telegram-adbot
- Your fellow Telegram Advertiser.
+# Shillify Telegram 💬
+
+Welcome to Shillify Telegram, your reliable tool for broadcasting messages to your Telegram groups! Shillify Telegram not only sends messages to all your groups but can also join and leave groups (though this feature is not recommended due to Telegram banning rules).
+
+## 🚀 Getting Started
+
+Setting up Shillify Telegram is a breeze! Follow these steps to get your advertiser up and running:
+
+1. ⬇️ Download or clone the repo, and enter the folder with the command line.
+2. ⚙️ Install the requirements with the command `python -m pip install -r requirements.txt`
+3. 🖋️ Fill in the `config.yaml` file with your settings.
+4. 🔖 Specify your groups in the `src/data/input/groups.txt` file.
+5. ✉️ Write the message you want to broadcast in the `src/data/input/message.txt` file.
+6. 🏁 Run the program and let Shillify Telegram do the magic!
+
+## 🚀 Features
+
+Shillify Telegram comes loaded with a plethora of features to help you effectively reach out to your Telegram groups:
+
+- 📬 Send messages to all groups in your account.
+- 🔄 Option to join and leave groups (not recommended due to potential for Telegram banning).
+- ⏱️ Configurable delay between messages and after all groups have been messaged.
+- 🔄 Discord Webhook integration for notifications.
+- 💎 Support for premium users.
+
+## 📝 Disclaimer
+
+This tool is designed for educational purposes and as a proof of concept. I am not responsible for any misuse or any bans, suspensions, or other punitive measures taken due to misuse of this tool. Please use responsibly and respect Telegram's Terms of Service.
+
+## 🎗️ Acknowledgments
+
+Heartfelt thanks to the open-source community for their continuous support and resources that have been integral to this project.
+
+## 🌐 Connect With Us
+
+Join our community on Discord for updates, support, and to meet other users of Shillify Telegram:
+
+- [Discord](https://discord.gg/kws)

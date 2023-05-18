@@ -1,0 +1,5 @@
+colorama==0.4.6
+discord_webhook==1.1.0
+pystyle==2.9
+PyYAML==6.0
+Telethon==1.28.5
