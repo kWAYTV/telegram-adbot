@@ -23,6 +23,10 @@ Shillify Telegram comes loaded with a plethora of features to help you effective
 - 🔄 Discord Webhook integration for notifications.
 - 💎 Support for premium users.
 
+## 🔥 Old Version
+
+This project it's the recode of my oldish [Shiller](https://github.com/kWAYTV/shillify-telegram).
+
 ## 📝 Disclaimer
 
 This tool is designed for educational purposes and as a proof of concept. I am not responsible for any misuse or any bans, suspensions, or other punitive measures taken due to misuse of this tool. Please use responsibly and respect Telegram's Terms of Service.
