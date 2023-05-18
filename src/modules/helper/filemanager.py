@@ -38,6 +38,11 @@ class FileManager():
             self.logger.log("INFO", "Successfully created config.yml, please fill it out and try again.")
             exit()
 
+        # if the folder /src/data/sessions/ doesn't exist, create it.
+        if not os.path.isdir("src/data/sessions/"):
+            self.logger.log("INFO", "Sessions folder not found, creating one...")
+            os.mkdir("src/data/sessions/")
+
         # if there is no emails in /src/data/input/emails.txt, exit the tool.
         if os.stat(self.config.groups_file).st_size == 0:
             self.logger.log("ERROR", "There is no emails in /src/data/input/emails.txt, please add some emails and try again.")
