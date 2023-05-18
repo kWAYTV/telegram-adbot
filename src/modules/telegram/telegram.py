@@ -77,10 +77,10 @@ class Shiller:
                     else: code = group
 
                     await self.client(JoinChannelRequest(code))
-                    self.logger.log("SUCCESS", "Joined group {}!".format(group))
+                    self.logger.log("OK", "Joined group {}!".format(group))
                     break
                 except errors.FloodWaitError as e:
-                    self.logger.log("SLEEP", "Ratelimited for {} seconds.".format(e.seconds))
+                    self.logger.log("WARNING", "Ratelimited for {} seconds.".format(e.seconds))
                     await asyncio.sleep(int(e.seconds))
                 except Exception as e:
                     self.logger.log("ERROR", "Failed to join group {}.".format(group))
@@ -107,10 +107,10 @@ class Shiller:
                     else: code = group
 
                     await self.client(LeaveChannelRequest(code))
-                    self.logger.log("SUCCESS", "Left group {}!".format(group))
+                    self.logger.log("OK", "Left group {}!".format(group))
                     break
                 except errors.FloodWaitError as e:
-                    self.logger.log("SLEEP", "Ratelimited for {} seconds.".format(e.seconds))
+                    self.logger.log("WARNING", "Ratelimited for {} seconds.".format(e.seconds))
                     await asyncio.sleep(int(e.seconds))
                 except Exception as e:
                     self.logger.log("ERROR", "Failed to leave group {}.".format(group))
@@ -124,7 +124,7 @@ class Shiller:
             await self.client.send_message(group, self.message_file_content)
             return True
         except errors.FloodWaitError as e:
-            self.logger.log("SLEEP", "Ratelimited for {} seconds.".format(e.seconds))
+            self.logger.log("WARNING", "Ratelimited for {} seconds.".format(e.seconds))
             self.webhook.error_webhook("Ratelimited for {} seconds.".format(e.seconds))
             await asyncio.sleep(int(e.seconds))
         except Exception as e:
@@ -141,11 +141,11 @@ class Shiller:
                     try:
                         last_message = (await self.client.get_messages(group, limit=1))[0]
                         if last_message.from_id.user_id == self.user.id:
-                            self.logger.log("INFO", "Skipped group {} as our message is the latest.".format(group.title))
+                            self.logger.log("WARNING", "Skipped group {} as our message is the latest.".format(group.title))
                             continue
                         
                         if await self.send_message(group):
-                            self.logger.log("SUCCESS", "Forwarded your message to {}!".format(group.title))
+                            self.logger.log("OK", "Forwarded your message to {}!".format(group.title))
                             sent += 1
                         else:
                             self.logger.log("ERROR", "Failed to forward your message to {}!".format(group.title))
@@ -163,7 +163,7 @@ class Shiller:
                 self.logger.log("ERROR", "Failed to get groups. Error: {}".format(e))
                 self.webhook.error_webhook("Failed to get groups. Error: {}".format(e))
 
-            self.logger.log("INFO", "Finished shilling, sent {} messages. Waiting {} seconds before shilling again.".format(sent, self.config.after_groups_messaged_delay))
+            self.logger.log("SLEEP", "Finished shilling, sent {} messages. Waiting {} seconds before shilling again.".format(sent, self.config.after_groups_messaged_delay))
             await self.client.send_message(self.config.nickname, "Finished shilling, sent {} messages. Starting again in {} seconds.".format(sent, self.config.after_groups_messaged_delay))
             self.webhook.finished_webhook(sent)
             await asyncio.sleep(int(self.config.after_groups_messaged_delay))

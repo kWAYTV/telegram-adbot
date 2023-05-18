@@ -23,7 +23,7 @@ class Logger:
         # Set the colors for the logs
         self.log_types = {
             "INFO": Fore.CYAN,
-            "SUCCESS": Fore.GREEN,
+            "OK": Fore.GREEN,
             "WARNING": Fore.YELLOW,
             "SLEEP": Fore.YELLOW,
             "ERROR": Fore.RED,
