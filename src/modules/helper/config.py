@@ -20,6 +20,7 @@ class Config():
             self.groups_file = self.config["groups_file"]
             self.message_file = self.config["message_file"]
             self.autoreply_file = self.config["autoreply_file"]
+            self.autoreply_switch = self.config["autoreply_switch"]
             self.between_messages_delay = self.config["between_messages_delay"]
             self.after_groups_messaged_delay = self.config["after_groups_messaged_delay"]
             self.premium_user = self.config["premium_user"]

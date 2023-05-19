@@ -15,11 +15,13 @@ class Shiller:
         self.logger = Logger()
         self.webhook = Webhooks()
         self.client = TelegramClient('src/data/sessions/anon', self.config.api_id, self.config.api_hash, sequential_updates=True)
-        self.register_handlers()
+        if self.config.autoreply_switch:
+            self.register_handlers()
+            self.autoreply_file_content = open(self.config.autoreply_file, "r+", encoding="utf-8").read().strip()
         self.groups_file_content = open(self.config.groups_file, "r+").read().strip().split("\n")
         self.message_file_content = open(self.config.message_file, "r+", encoding="utf-8").read().strip()
-        self.autoreply = open(self.config.autoreply_file, "r+", encoding="utf-8").read().strip()
 
+    # Autoreply event handler
     def register_handlers(self):
         @self.client.on(events.NewMessage(incoming=True))
         async def handle_new_message(event):
@@ -28,8 +30,9 @@ class Shiller:
                 if not from_.bot:
                     self.logger.log("INFO", "Autoreply: {}.".format(event.message.message))
                     await asyncio.sleep(1)
-                    await event.respond(self.autoreply)
+                    await event.respond(self.autoreply_file_content)
 
+    # Auth function
     async def connect_client(self):
 
         self.logger.log("INFO", "Attempting to login to Telegram...")
@@ -47,6 +50,7 @@ class Shiller:
         self.user = await self.client.get_me()
         self.logger.log("INFO", "Successfully signed into account {}.".format(self.user.username))
 
+    # Function to get all the groups
     async def get_groups(self):
         self.logger.log("INFO", "Getting all the groups, this could take a while...")
 
@@ -71,6 +75,7 @@ class Shiller:
         self.logger.log("INFO", "Found {} groups.".format(len(groups)))
         return groups
 
+    # Function to join the groups
     async def join_groups(self):
         seen = []
 
@@ -101,6 +106,7 @@ class Shiller:
 
             await asyncio.sleep(0.8)
 
+    # Function to leave the groups
     async def leave_groups(self):
         seen = []
 
@@ -131,6 +137,7 @@ class Shiller:
 
             await asyncio.sleep(0.8)
 
+    # Function to send a message to a group
     async def send_message(self, group: types.Channel):
         try:
             await self.client.send_message(group, self.message_file_content)
@@ -142,6 +149,7 @@ class Shiller:
         except Exception as e:
             return e
 
+    # Function to start shilling
     async def start_shilling(self):
         sent_total = 0
         while True:
@@ -182,6 +190,7 @@ class Shiller:
             self.webhook.finished_webhook(int(sent_now), int(sent_total))
             await asyncio.sleep(int(self.config.after_groups_messaged_delay))
 
+    # Function to start the class properly
     async def start(self):
         await self.connect_client()
         await self.client.send_message(self.config.nickname, "Shillify Telegram has started!")
