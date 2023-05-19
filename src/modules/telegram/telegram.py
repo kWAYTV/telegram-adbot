@@ -190,10 +190,24 @@ class Shiller:
             self.webhook.finished_webhook(int(sent_now), int(sent_total))
             await asyncio.sleep(int(self.config.after_groups_messaged_delay))
 
+    # Create a menu, where user can select between Join, Leave, Start Shilling and Exit 
+    async def menu(self):
+        while True:
+            self.logger.log("INFO", "Select an option:")
+            self.logger.log("INFO", "J - Join groups")
+            self.logger.log("INFO", "L - Leave groups")
+            self.logger.log("INFO", "S - Start shilling")
+            self.logger.log("INFO", "E - Exit")
+            self.logger.log("INPUT", "Option: ")
+            option = input("").lower()  # convert input to lowercase to simplify comparisons
+            if option == "j": await self.join_groups()
+            elif option == "l": await self.leave_groups()
+            elif option == "s": await self.start_shilling()
+            elif option == "e": exit()
+            else: self.logger.log("ERROR", "Invalid option! Please try again.")
+
     # Function to start the class properly
     async def start(self):
         await self.connect_client()
         await self.client.send_message(self.config.nickname, "Shillify Telegram has started!")
-        await self.join_groups()
-        await self.leave_groups()
-        await self.start_shilling()
+        await self.menu()

@@ -8,7 +8,7 @@ class Config():
             self.config = yaml.load(file, Loader=SafeLoader)
 
             # Set the Build version & icon
-            self.build_version = "2.3.0"
+            self.build_version = "2.3.5"
             self.webhook_icon = "https://i.imgur.com/M1jL4KL.png"
 
             # Telegram API Settings
