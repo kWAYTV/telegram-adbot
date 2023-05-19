@@ -1,13 +1,14 @@
 # Telegram Advertiser - discord.gg/kws
 
 # Telegram API Settings
-api_id: # Your Tekegran API ID
+api_id: # Your Telegram API ID
 api_hash: "" # Your Telegram API Hash
 phone_number: "" # Your Telegram phone number with country code
 
 # Tool Settings
 groups_file: "src/data/input/groups.txt" # File containing groups to message
 message_file: "src/data/input/message.txt" # File containing the message to send
+autoreply_file: "src/data/input/autoreply.txt" # File containing the autoreply message to send
 between_messages_delay: 17 # Delay to wait between messages in seconds
 after_groups_messaged_delay: 1800 # Delay to wait after all groups have been messaged in seconds
 premium_user: False # Whether or not you are a premium user

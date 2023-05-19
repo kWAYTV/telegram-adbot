@@ -1,5 +1,5 @@
 import asyncio, os
-from telethon import TelegramClient
+from telethon import TelegramClient, events
 from src.modules.utils.logger import Logger
 from src.modules.helper.config import Config
 from telethon import errors, functions, types
@@ -15,8 +15,20 @@ class Shiller:
         self.logger = Logger()
         self.webhook = Webhooks()
         self.client = TelegramClient('src/data/sessions/anon', self.config.api_id, self.config.api_hash, sequential_updates=True)
+        self.register_handlers()
         self.groups_file_content = open(self.config.groups_file, "r+").read().strip().split("\n")
         self.message_file_content = open(self.config.message_file, "r+", encoding="utf-8").read().strip()
+        self.autoreply = open(self.config.autoreply_file, "r+", encoding="utf-8").read().strip()
+
+    def register_handlers(self):
+        @self.client.on(events.NewMessage(incoming=True))
+        async def handle_new_message(event):
+            if event.is_private:
+                from_ = await event.client.get_entity(event.from_id)
+                if not from_.bot:
+                    self.logger.log("INFO", "Autoreply: {}.".format(event.message.message))
+                    await asyncio.sleep(1)
+                    await event.respond(self.autoreply)
 
     async def connect_client(self):
 
