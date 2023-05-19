@@ -19,13 +19,14 @@ class Webhooks:
             self.hook.add_embed(embed)
             self.hook.execute( remove_embeds = True )
 
-    def start_shill_webhook(self, groups, sent):
+    def start_shill_webhook(self, groups, sent_now, sent_total):
         if self.config.webhook_switch:
             embed = DiscordEmbed(description = "Advertising Started!", color = 0xbb95bf)
             embed.set_author(name = "Shillify Telegram", url = "https://kwayservices.top/", icon_url = self.hookImg)
             embed.set_footer(text = f"Shillify Telegram - {self.config.nickname}", icon_url = self.hookImg)
             embed.add_embed_field(name = "Found Groups", value = groups)
-            embed.add_embed_field(name = "Sent Messages", value = sent)
+            embed.add_embed_field(name = "Sent Now", value = sent_now)
+            embed.add_embed_field(name = "Sent Total", value = sent_total)
             embed.set_thumbnail(url = self.hookImg)
             embed.set_timestamp()
             self.hook.add_embed(embed)
@@ -42,11 +43,12 @@ class Webhooks:
             self.hook.add_embed(embed)
             self.hook.execute( remove_embeds = True )
 
-    def finished_webhook(self, amount):
+    def finished_webhook(self, sent_now, sent_total):
         if self.config.webhook_switch:
             embed = DiscordEmbed(color = 0x000000)
             embed.set_author(name = "Shillify Telegram", url = "https://kwayservices.top/", icon_url = self.hookImg)
-            embed.add_embed_field(name = "Finished sending messages to", value = amount)
+            embed.add_embed_field(name = "Sent now", value = sent_now)
+            embed.add_embed_field(name = "Sent total", value = sent_total)
             embed.set_footer(text = f"Shillify Telegram - {self.config.nickname}", icon_url = self.hookImg)
             embed.set_thumbnail(url = self.hookImg)
             embed.set_timestamp()

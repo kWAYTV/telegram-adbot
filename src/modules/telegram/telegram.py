@@ -131,12 +131,13 @@ class Shiller:
             return e
 
     async def start_shilling(self):
-        sent = 0
+        sent_total = 0
         while True:
+            sent_now = 0
             try:
                 groups = await self.get_groups()
-                self.logger.log("INFO", "Starting to advertise! Sent {} messages so far.".format(sent))
-                self.webhook.start_shill_webhook(int(len(groups)), int(sent))
+                self.logger.log("INFO", "Starting to advertise! Sent {} messages right now and {} in total.".format(sent_now, sent_total))
+                self.webhook.start_shill_webhook(int(len(groups)), int(sent_now), int(sent_total))
                 for group in groups:
                     try:
                         last_message = (await self.client.get_messages(group, limit=1))[0]
@@ -146,13 +147,14 @@ class Shiller:
                         
                         if await self.send_message(group):
                             self.logger.log("OK", "Forwarded your message to {}!".format(group.title))
-                            sent += 1
+                            sent_total += 1
+                            sent_now += 1
                         else:
                             self.logger.log("ERROR", "Failed to forward your message to {}!".format(group.title))
 
                         # Set title
                         if os.name == 'nt':
-                            os.system("title Shillify Telegram • Sent {} messages • discord.gg/kws".format(sent))
+                            os.system("title Shillify Telegram • Sent {} messages • Total {} messages • discord.gg/kws".format(sent_now, sent_total))
 
                         await asyncio.sleep(int(self.config.between_messages_delay))
                     except Exception as e:
@@ -163,9 +165,9 @@ class Shiller:
                 self.logger.log("ERROR", "Failed to get groups. Error: {}".format(e))
                 self.webhook.error_webhook("Failed to get groups. Error: {}".format(e))
 
-            self.logger.log("SLEEP", "Finished shilling, sent {} messages. Waiting {} seconds before shilling again.".format(sent, self.config.after_groups_messaged_delay))
-            await self.client.send_message(self.config.nickname, "Finished shilling, sent {} messages. Starting again in {} seconds.".format(sent, self.config.after_groups_messaged_delay))
-            self.webhook.finished_webhook(sent)
+            self.logger.log("SLEEP", "Finished shilling, sent {} messages now, {} in total. Sleeping for {} seconds.".format(sent_now, sent_total, self.config.after_groups_messaged_delay))
+            await self.client.send_message(self.config.nickname, "Finished shilling, sent {} messages now, {} in total. Sleeping for {} seconds.".format(sent_now, sent_total, self.config.after_groups_messaged_delay))
+            self.webhook.finished_webhook(int(sent_now), int(sent_total))
             await asyncio.sleep(int(self.config.after_groups_messaged_delay))
 
     async def start(self):
